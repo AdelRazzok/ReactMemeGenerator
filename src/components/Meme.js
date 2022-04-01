@@ -7,9 +7,7 @@ export default function Meme() {
 		const randomInt = Math.floor(Math.random() * memesArray.length)
 		return memesArray[randomInt].url
 	}
-
 	const [url, setUrl] = useState(getMemeImg)
-	
 	const handleClick = () => setUrl(getMemeImg)
 	
 	return (
