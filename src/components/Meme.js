@@ -7,8 +7,15 @@ export default function Meme() {
 		const randomInt = Math.floor(Math.random() * memesArray.length)
 		return memesArray[randomInt].url
 	}
-	const [url, setUrl] = useState(getMemeImg)
-	const handleClick = () => setUrl(getMemeImg)
+	const [meme, setMeme] = useState({
+		topText: '',
+		botText: '',
+		imgUrl: getMemeImg()
+	})
+	const handleClick = () => setMeme(prevMeme => ({
+		...prevMeme,
+		imgUrl: getMemeImg()
+	}))
 	
 	return (
 		<main className='Meme'>
@@ -19,7 +26,7 @@ export default function Meme() {
 					Get a new meme image 🖼️
 				</button>
 			</div>
-			<img src={url} alt='Meme image' className='Meme-image' />
+			<img src={meme.imgUrl} alt='Meme image' className='Meme-image' />
 		</main>
 	)
 }
