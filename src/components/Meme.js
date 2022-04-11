@@ -2,18 +2,6 @@ import {useState} from 'react'
 import memesData from '../memesData'
 
 export default function Meme() {
-	const [formData, setFormData] = useState(
-		{firstName: '', lastName: ''}
-	)
-	const handleChange = (event) => {
-		setFormData(prev => {
-			return {
-				...prev,
-				[event.target.name]: event.target.value
-			}
-		})
-	}
-
 	const getMemeImg = () => {
 		const memesArray = memesData.data.memes
 		const randomInt = Math.floor(Math.random() * memesArray.length)
@@ -28,6 +16,15 @@ export default function Meme() {
 		...prevMeme,
 		imgUrl: getMemeImg()
 	}))
+
+	const handleChange = (event) => {
+		const {name, value} = event.target
+
+		setMeme(prevMeme => ({
+			...prevMeme,
+			[name]: value
+		}))
+	}
 	
 	return (
 		<main className='Meme'>
@@ -36,25 +33,30 @@ export default function Meme() {
 					type='text'
 					placeholder='Your top text here...'
 					className='Form-input'
-					name='firstName'
+					name='topText'
 					onChange={handleChange}
 				/>
 				<input
 					type='text'
 					placeholder='Your bottom text here...'
 					className='Form-input'
-					name='lastName'
+					name='botText'
 					onChange={handleChange}
 				/>
 				<button
 					type='button'
-					onClick={handleClick}
 					className='Form-button'
+					onClick={handleClick}
 				>
 					Get a new meme image 🖼️
 				</button>
 			</div>
-			<img src={meme.imgUrl} alt='Meme image' className='Meme-image' />
+
+			<div className="Meme-image">
+				<img src={meme.imgUrl} alt='Meme image' className='Meme-image' />
+				<span className="Meme-text top-text">{meme.topText.toUpperCase()}</span>
+				<span className="Meme-text bot-text">{meme.botText.toUpperCase()}</span>
+			</div>
 		</main>
 	)
 }
